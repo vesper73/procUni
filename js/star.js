@@ -34,10 +34,8 @@ Star.prototype = {
         //Draw star
         var element = document.getElementsByTagName('canvas')[0];
         var canvas = element.getContext('2d');
-        var cWidth = element.width;
-        var cHeight = element.height;
         var starScreenSize = Math.floor(Math.sqrt(this.mass));
-        var starScrPoint = { x: cWidth/2, y: cHeight/2 };
+        var starScrPoint = { x: element.width/2, y: element.height/2 };
         var imageDataStar = canvas.createImageData(starScreenSize, starScreenSize);
         var scrRadius = starScreenSize/2;
         
@@ -60,7 +58,7 @@ Star.prototype = {
             }
         }    
         canvas.fillStyle = 'black';
-        canvas.fillRect(0, 0, cWidth, cHeight);
+        canvas.fillRect(0, 0, element.width, element.height);
         canvas.putImageData(imageDataStar, starScrPoint.x-(starScreenSize/2), starScrPoint.y-(starScreenSize/2));
         
         this.zSauce+= Math.randomSeedNext(0.02);
