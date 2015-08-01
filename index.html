@@ -9,7 +9,7 @@
 		<script src="js/galaxy.js"></script>
 		<script src="js/universe.js"></script>
 	</head>
-	<body onload="init();">
+	<body>
 		<div id="page">
 			
 			<canvas id='canvasproc' width='880' height='800'>canvas setpixel</canvas>
@@ -90,11 +90,9 @@
 	        });
 					
 			
-			function init()
-			{	
-				$('#txtSeed').val('3.14159');
-				render();
-			};
+			$('#txtSeed').val('3.14159');
+			render();
+			
 			
 		</script>
 		
