@@ -10,6 +10,7 @@
 		<script src="js/universe.js"></script>
 	</head>
 	<body>
+		
 		<div id="page">
 			
 			<canvas id='canvasproc' width='880' height='800'>canvas setpixel</canvas>
@@ -45,53 +46,57 @@
 				<div id='statsSection'></div>
 	       </div>
 	    </div>     
+		
 		<script>
 			
 			var universe, mass; 
 			
-			function render() {
-				universe = Object.create(Universe.prototype).init(parseFloat($('#txtSeed').val()),0.0010,"#canvasproc");
-				universe.render();
-			};
-			
-			
-			$("#canvasproc").on('click',
+			$(document).ready(function(){
 				
-				function(e) {
-	            	universe.zoomIn({ x: e.offsetX, y: e.offsetY });
-				}
-			);
-			
-			$("#buttonZoomOut").on('click',
-	        	function(e) {
-					cancelAnimationFrame(Star.animationHandle);
-	            	universe.zoomOut();
-				}
-			);
-			
-			
-			$('#buttonScreenshot').on('click',
-	        function(e) {
-	            document.getElementById('btn-download').href = $("#canvasproc").get(0).toDataURL('image/png');
-	        });
-			
-			$('#buttonReset').on('click',
-	        function(e) {
-	            render();
-	        });
-			
-			
-			$('#buttonNext').on('click',
-	        function(e) {
+				function render() {
+					universe = Object.create(Universe.prototype).init(parseFloat($('#txtSeed').val()),0.0010,"#canvasproc");
+					universe.render();
+				};
 				
-	            $('#txtSeed').val(parseFloat($('#txtSeed').val()) + 1.0);
-				render();
-				//$('#statsSection').html(CURRENT_SEED);
-	        });
+				
+				$("#canvasproc").on('click',
 					
+					function(e) {
+		            	universe.zoomIn({ x: e.offsetX, y: e.offsetY });
+					}
+				);
+				
+				$("#buttonZoomOut").on('click',
+		        	function(e) {
+						cancelAnimationFrame(Star.animationHandle);
+		            	universe.zoomOut();
+					}
+				);
+				
+				
+				$('#buttonScreenshot').on('click',
+		        function(e) {
+		            document.getElementById('btn-download').href = $("#canvasproc").get(0).toDataURL('image/png');
+		        });
+				
+				$('#buttonReset').on('click',
+		        function(e) {
+		            render();
+		        });
+				
+				
+				$('#buttonNext').on('click',
+		        function(e) {
+					
+		            $('#txtSeed').val(parseFloat($('#txtSeed').val()) + 1.0);
+					render();
+					//$('#statsSection').html(CURRENT_SEED);
+		        });
+
+				$('#txtSeed').val('3.14159');
+				render();
+			});
 			
-			$('#txtSeed').val('3.14159');
-			render();
 			
 			
 		</script>
