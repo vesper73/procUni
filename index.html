@@ -22,7 +22,7 @@
 						</td>
 						<td>
 							<div id='buttonScreenshot' class='controlButton mediumMarginRight'>
-		                        <!--<a href="#" class="button" id="btn-download" download="universe.png">Screenshot</a>-->
+		                        <a href="#" class="button" id="btn-download" download="universe.png">Screenshot</a>
 		                    </div>
 						</td>
 						
@@ -55,7 +55,7 @@
 			};
 			
 			
-			$("#canvasproc").click(
+			$("#canvasproc").on('click',
 				
 				function(e) {
 	            	universe.zoomIn({ x: e.offsetX, y: e.offsetY });
@@ -72,7 +72,7 @@
 			
 			$('#buttonScreenshot').on('click',
 	        function(e) {
-	            //document.getElementById('btn-download').href = $("#canvasproc").get(0).toDataURL('image/png');
+	            document.getElementById('btn-download').href = $("#canvasproc").get(0).toDataURL('image/png');
 	        });
 			
 			$('#buttonReset').on('click',
