@@ -1,0 +1,109 @@
+<html>
+	<head>
+		<title>Universe</title>
+		<link rel="stylesheet" type="text/css" href="css/mand.css"></line>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="js/perlin.js"></script>
+		<script src="js/util.js"></script>
+		<script src="js/star.js"></script>
+		<script src="js/galaxy.js"></script>
+		<script src="js/universe.js"></script>
+		
+		
+	</head>
+	<body onload="init();">
+		<div id="page">
+			<table>
+				<tr>
+		            <td>
+		                <div class='canvasSection'>
+		                    <canvas id='canvas' width='880' height='800'>canvas setpixel</canvas>
+		                </div>
+		            </td> 
+		        </tr>
+			</table>
+			
+			<div class='controlSection'>
+				<table>
+					<tr>
+						<td>
+							<div id='buttonZoomOut' class='controlButton'>Zoom Out</div>
+						</td>
+						<td>
+							<div id='buttonScreenshot' class='controlButton mediumMarginRight'>
+		                        <a href="#" class="button" id="btn-download" download="universe.png">Screenshot</a>
+		                    </div>
+						</td>
+						
+					</tr>
+					
+					<tr>
+						<td>
+							<div id='buttonReset' class='controlButton'>Universe</div>
+						</td>
+						
+						<td>
+							<input type="text" id="txtSeed"  />
+						</td>
+						<td>
+							<div id='buttonNext' class='controlButton'>Next</div>
+						</td>
+					</tr>
+					
+				</table>
+				<div id='statsSection'></div>
+	       </div>
+	    </div>     
+		<script>
+			
+			var universe, mass; 
+			
+			function render() {
+				universe = Object.create(Universe.prototype).init(parseFloat($('#txtSeed').val()),0.0010,"canvas");
+				universe.render();
+			};
+			
+			
+			$("#canvas").on('click',
+	        	function(e) {
+	            	universe.zoomIn({ x: e.offsetX, y: e.offsetY });
+				}
+			);
+			
+			$("#buttonZoomOut").on('click',
+	        	function(e) {
+					cancelAnimationFrame(Star.animationHandle);
+	            	universe.zoomOut();
+				}
+			);
+			
+			$('#buttonScreenshot').on('click',
+	        function(e) {
+	            document.getElementById('btn-download').href = $("#canvas").get(0).toDataURL('image/png');
+	        });
+			
+			$('#buttonReset').on('click',
+	        function(e) {
+	            render();
+	        });
+			
+			
+			$('#buttonNext').on('click',
+	        function(e) {
+				
+	            $('#txtSeed').val(parseFloat($('#txtSeed').val()) + 1.0);
+				render();
+				//$('#statsSection').html(CURRENT_SEED);
+	        });
+					
+			
+			function init()
+			{	
+				$('#txtSeed').val('3.14159');
+				render();
+			};
+			
+		</script>
+		
+	</body>
+</html>
