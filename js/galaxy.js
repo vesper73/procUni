@@ -82,6 +82,7 @@ Galaxy.prototype = {
     
     changeView: function(clickPoint) {
         
+        /*
         var starIndex,closestStar,dist,shortDist;
         for(starIndex in this.stars)
         {
@@ -98,7 +99,7 @@ Galaxy.prototype = {
         this.selectedEntity = Universe.currentEntity;
         this.selectedEntity.generate();
         this.selectedEntity.render();
-        
+        */
        
     }
 };
