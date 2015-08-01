@@ -97,7 +97,6 @@ Universe.prototype = {
     
     zoomIn: function(clickPoint)
     {
-        alert(Universe.currentEntity);
         Universe.currentEntity.changeView(clickPoint);
     },
     

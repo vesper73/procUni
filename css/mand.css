@@ -9,6 +9,12 @@ body {
 #page {
     padding:10px;    
 }
+canvas {
+   padding:10px;
+   border: 1px solid #444444;
+   border-radius: 15px;
+   background-color:black;
+}
 .canvasSection {
    padding:10px;
    border: 1px solid #444444;
