@@ -1,19 +1,9 @@
 /* global noise */
-var Star = Object.create(null);
-Star.prototype = {
+var Star = {
     
     init: function(parentEntity, seed, mass, canvasTag, location, color) {
         
-        this.parentEntity = parentEntity;
-        this.seed = seed;
-        this.mass = mass; 
-        this.canvasTag = canvasTag;
-        this.location = location;
-        this.color = color;
-        this.selectedEntity = null;
-        
-        this.zSuace = 0;
-        this.sauce = 0;
+        Entity.init.call(this,parentEntity,seed,mass,canvasTag,location,color);
         
         return this;
     },
@@ -66,6 +56,8 @@ Star.prototype = {
         //var self = this;
         (function(self) { Star.animationHandle = requestAnimationFrame(function(){ self.render()}) })(this);
         
+        //var self = this;
+        //requestAnimationFrame(function() { Star.prototype.render.call(self); });
     },
     
     

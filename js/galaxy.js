@@ -1,18 +1,9 @@
 /// <reference path="../typings/jquery/jquery.d.ts"/>
-var Galaxy = Object.create(null);
-Galaxy.prototype = {
+var Galaxy = {
     
     init: function(parentEntity, seed, mass, canvasTag, location, color) {
         
-        this.parentEntity = parentEntity;
-        this.seed = seed;
-        this.mass = mass;
-        this.canvasTag = canvasTag;
-        this.location = location;
-        this.color = color;
-        this.stars = [];
-        this.element = $(this.canvasTag).get(0);
-        this.selectedEntity = null;
+        Entity.init.call(this,parentEntity,seed,mass,canvasTag,location,color);
         
         return this;
     },
@@ -43,7 +34,7 @@ Galaxy.prototype = {
                 {
                    this.stars.push(
                         
-                        Object.create(Star.prototype).init(
+                        Object.create(Star).init(
                             this,
                             Math.randomSeedNext(1.0),
                             mass,
@@ -96,7 +87,7 @@ Galaxy.prototype = {
         }
         
         Universe.currentEntity = closestStar; 
-        this.selectedEntity = Universe.currentEntity;
+        this.selectedEntity = closestStar;
         this.selectedEntity.generate();
         this.selectedEntity.render();
         

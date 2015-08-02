@@ -5,9 +5,10 @@
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="js/perlin.js"></script>
 		<script src="js/util.js"></script>
-		<script src="js/star.js"></script>
-		<script src="js/galaxy.js"></script>
-		<script src="js/universe.js"></script>
+		<script src="js/Entity.js"></script>
+		<script src="js/Star.js"></script>
+		<script src="js/Galaxy.js"></script>
+		<script src="js/Universe.js"></script>
 	</head>
 	<body>
 		
@@ -54,8 +55,20 @@
 			$(document).ready(function(){
 				
 				function render() {
-					universe = Object.create(Universe.prototype).init(parseFloat($('#txtSeed').val()),0.0010,"#canvasproc");
-					universe.render();
+					
+					
+				    universe = Object.create(Universe);
+					universe.init(
+						universe,
+						parseFloat($('#txtSeed').val())
+						,0.0010,
+						"#canvasproc",
+						{x:0,y:0},
+						{r:0,g:0,b:0,a:255}
+					);
+					universe.generate();
+				    universe.render();
+					
 				};
 				
 				
