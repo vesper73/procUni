@@ -57,8 +57,7 @@
 				function render() {
 					
 					
-				    universe = Object.create(Universe);
-					universe.init(
+				    universe = Object.create(Universe).init(
 						universe,
 						parseFloat($('#txtSeed').val())
 						,0.0010,

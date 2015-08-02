@@ -1,16 +1,11 @@
 /* global noise */
 var Star = {
     
-    init: function(parentEntity, seed, mass, canvasTag, location, color) {
-        
-        Entity.init.call(this,parentEntity,seed,mass,canvasTag,location,color);
-        
-        return this;
-    },
+    init: Entity.init,
     
     generate: function() {
         
-        CURRENT_SEED = this.seed;
+        Entity.generate.call(this);
         
         this.zSauce = 0;
         this.sauce = Math.randomSeedNext(1.0);

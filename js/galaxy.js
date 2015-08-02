@@ -1,16 +1,11 @@
 /// <reference path="../typings/jquery/jquery.d.ts"/>
 var Galaxy = {
     
-    init: function(parentEntity, seed, mass, canvasTag, location, color) {
-        
-        Entity.init.call(this,parentEntity,seed,mass,canvasTag,location,color);
-        
-        return this;
-    },
+    init: Entity.init,
     
     generate: function() {
         
-        CURRENT_SEED = this.seed;
+        Entity.generate.call(this);
         
         //Generate stars
         this.stars = [];
