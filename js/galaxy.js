@@ -2,24 +2,36 @@
 var Galaxy = {
     
     init: Entity.init,
+    changeView: Entity.changeView,
+    render: Entity.render,
     
+    update: function() {
+        
+        var i, e;
+        for (i in this.entities)
+        {
+           e = this.entities[i];
+           e.imageData = e.imageData || this.canvas.createImageData(2, 2);
+           setPixel(e.imageData,0,0,e.color);
+           setPixel(e.imageData,1,0,e.color);
+           setPixel(e.imageData,0,1,e.color);
+           setPixel(e.imageData,1,1,e.color);
+        }
+    },
+
     generate: function() {
         
         Entity.generate.call(this);
         
-        //Generate stars
-        this.stars = [];
+        //we should generate image data for each entity, and then on the global render method, loop through each entities imagedata an put it at the proper coordinateon the main canvas image
+        //regular stars could be 2x2 image data
         var x,y;
         var distFromCenter;
-        var mass, mag, massCeiling;
+        var mass, mag, massCeiling, color;
         for(y = 0; y < this.element.height; y+=2)
         {
             for(x = 0; x < this.element.width; x+=2)
             {
-                massCeiling = 10000;
-                mass = Math.randomSeedNext(massCeiling);
-                mag = (mass / massCeiling * (255 - 30)) + 30;
-                   
                 distFromCenter = screenDistance(
                     { x: this.element.width/2, y: this.element.height/2 },
                     { x: x, y: y }
@@ -27,7 +39,12 @@ var Galaxy = {
                 
                 if(Math.randomSeedNext(1.0) < 1.0/(distFromCenter*distFromCenter/this.mass))
                 {
-                   this.stars.push(
+                   massCeiling = 10000;
+                   mass = Math.randomSeedNext(massCeiling);
+                   mag = (mass / massCeiling * (255 - 30)) + 30;
+                   color = {r: mag, g:mag, b:mag, a:255};
+                   
+                   this.entities.push(
                         
                         Object.create(Star).init(
                             this,
@@ -35,7 +52,7 @@ var Galaxy = {
                             mass,
                             this.canvasTag,
                             {x:x, y:y},
-                            {r: mag, g:mag, b:mag, a:255}
+                            color
                         )
                     );
                 }
@@ -43,51 +60,10 @@ var Galaxy = {
         }
         
         
-        $('#statsSection').html(this.stars.length);
-    },
-    
-    render: function() {
-        
-        var element = $(this.canvasTag).get(0);
-        var canvas = element.getContext('2d');
-        var imageData = canvas.createImageData(element.width, element.height);
-        
-        var starIndex, s;
-        for (starIndex in this.stars)
-        {
-            s = this.stars[starIndex];
-            var color = (this.selectedEntity && this.selectedEntity.seed === s.seed) ? { r:255,g:0,b:0,a:255} : s.color;
-            setPixel(imageData,s.location.x,s.location.y,color);
-            setPixel(imageData,s.location.x+1,s.location.y,color);
-            setPixel(imageData,s.location.x+1,s.location.y+1,color);
-            setPixel(imageData,s.location.x,s.location.y+1,color);
-        }
-        
-        canvas.putImageData(imageData, 0, 0);
-    },
-    
-    changeView: function(clickPoint) {
-        
-        
-        var starIndex,closestStar,dist,shortDist;
-        for(starIndex in this.stars)
-        {
-            dist = screenDistance(this.stars[starIndex].location,clickPoint);
-            shortDist = shortDist || dist;
-            if(dist <= shortDist)
-            {
-                closestStar = this.stars[starIndex];
-                shortDist = dist;
-            }
-        }
-        
-        Universe.currentEntity = closestStar; 
-        this.selectedEntity = closestStar;
-        this.selectedEntity.generate();
-        this.selectedEntity.render();
-        
-       
+        $('#statsSection').html(this.entities.length);
     }
+    
+    
 };
 
 

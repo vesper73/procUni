@@ -12,18 +12,15 @@ var Star = {
         
     },
     
-    render: function() {
+    
+    update: function() {
         
-        //var colorStyle = "rgba("+ this.color.r + "," + this.color.g + "," + this.color.b + "," + this.color.a +")";
-        
-        //Draw star
-        var element = document.getElementsByTagName('canvas')[0];
-        var canvas = element.getContext('2d');
         var starScreenSize = Math.floor(Math.sqrt(this.mass));
-        var starScrPoint = { x: element.width/2, y: element.height/2 };
-        var imageDataStar = canvas.createImageData(starScreenSize, starScreenSize);
         var scrRadius = starScreenSize/2;
+        //var starScrPoint = { x: this.element.width/2, y: this.element.height/2 };
         
+        this.imageData = this.canvas.createImageData(starScreenSize, starScreenSize);
+       
         var value,dist,color,scale;
         for (var x = 0; x < starScreenSize; x++) {
             for (var y = 0; y < starScreenSize; y++) {
@@ -38,22 +35,29 @@ var Star = {
                 if(dist > scale)
                     color = color * 1.0/((dist - scale)*30);
                 
-                setPixel(imageDataStar,x,y,{r:color,g:color,b:color,a:255});
+                setPixel(this.imageData,x,y,{r:color,g:color,b:color,a:255});
          
             }
         }    
-        canvas.fillStyle = 'black';
-        canvas.fillRect(0, 0, element.width, element.height);
-        canvas.putImageData(imageDataStar, starScrPoint.x-(starScreenSize/2), starScrPoint.y-(starScreenSize/2));
         
         this.zSauce+= Math.randomSeedNext(0.02);
         
-        //var self = this;
-        (function(self) { Star.animationHandle = requestAnimationFrame(function(){ self.render()}) })(this);
-        
-        //var self = this;
-        //requestAnimationFrame(function() { Star.prototype.render.call(self); });
     },
+
+    render: function() {
+        
+        this.update();
+      
+        this.canvas.fillStyle = 'black';
+        this.canvas.fillRect(0, 0, this.element.width, this.element.height);
+        
+        this.canvas.putImageData(this.imageData, Math.floor(this.element.width/2 - this.imageData.width/2), Math.floor(this.element.height/2 - this.imageData.height/2));
+       
+        var self = this;
+        Universe.animationHandle = requestAnimationFrame(function() { self.render(); });
+    },
+    
+    
     
     
 };

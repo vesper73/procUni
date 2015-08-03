@@ -74,13 +74,14 @@
 				$("#canvasproc").on('click',
 					
 					function(e) {
+						cancelAnimationFrame(Universe.animationHandle);
 		            	universe.zoomIn({ x: e.offsetX, y: e.offsetY });
 					}
 				);
 				
 				$("#buttonZoomOut").on('click',
 		        	function(e) {
-						cancelAnimationFrame(Star.animationHandle);
+						cancelAnimationFrame(Universe.animationHandle);
 		            	universe.zoomOut();
 					}
 				);
