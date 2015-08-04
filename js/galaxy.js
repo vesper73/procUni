@@ -1,27 +1,9 @@
 /// <reference path="../typings/jquery/jquery.d.ts"/>
 var Galaxy = {
     
-    init: Entity.init,
-    changeView: Entity.changeView,
-    render: Entity.render,
-    
-    update: function() {
-        
-        var i, e;
-        for (i in this.entities)
-        {
-           e = this.entities[i];
-           e.imageData = e.imageData || this.canvas.createImageData(2, 2);
-           setPixel(e.imageData,0,0,e.color);
-           setPixel(e.imageData,1,0,e.color);
-           setPixel(e.imageData,0,1,e.color);
-           setPixel(e.imageData,1,1,e.color);
-        }
-    },
-
     generate: function() {
         
-        Entity.generate.call(this);
+        this.parent.generate.call(this);
         
         //we should generate image data for each entity, and then on the global render method, loop through each entities imagedata an put it at the proper coordinateon the main canvas image
         //regular stars could be 2x2 image data
@@ -46,7 +28,7 @@ var Galaxy = {
                    
                    this.entities.push(
                         
-                        Object.create(Star).init(
+                        Object.create(Object.inherit(Star,Entity)).init(
                             this,
                             Math.randomSeedNext(1.0),
                             mass,
@@ -61,9 +43,22 @@ var Galaxy = {
         
         
         $('#statsSection').html(this.entities.length);
-    }
+    },
     
-    
+    update: function() {
+        
+        var i, e;
+        for (i in this.entities)
+        {
+           e = this.entities[i];
+           e.imageData = e.imageData || this.canvas.createImageData(2, 2);
+           setPixel(e.imageData,0,0,e.color);
+           setPixel(e.imageData,1,0,e.color);
+           setPixel(e.imageData,0,1,e.color);
+           setPixel(e.imageData,1,1,e.color);
+        }
+    },
+
 };
 
 

@@ -28,6 +28,22 @@ var setPixel = function(iData, x, y, c) {
     iData.data[index+3] = c.a;
 };
 
+Object.inherit = function(newObj, parentObj)
+{
+   var key;
+   for(key in parentObj)
+   {
+    if(!newObj[key]) 
+        newObj[key] = parentObj[key];
+    //console.log(parentObj[key]);
+   }
+    
+   newObj.parent = parentObj;
+   
+   return newObj; 
+};
+
+
 
 
 

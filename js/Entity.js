@@ -18,8 +18,8 @@ var Entity = {
 				
 		return this;
 	},
-	
-	generate: function() {
+    
+    generate: function() {
 		
         CURRENT_SEED = this.seed;
         this.entities = [];
@@ -36,7 +36,7 @@ var Entity = {
         for (i in this.entities)
         {
             e = this.entities[i];
-            this.canvas.putImageData(e.imageData, e.location.x, e.location.y);
+            this.canvas.putImageData(e.imageData, e.location.x - (e.imageData.width/2), e.location.y - (e.imageData.height/2));
         }
         
         var self = this;

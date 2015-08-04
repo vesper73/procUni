@@ -1,13 +1,9 @@
 /// <reference path="../typings/jquery/jquery.d.ts"/>
 var Universe = {
     
-    init: Entity.init,
-    render: Entity.render,
-    changeView: Entity.changeView,
-    
     generate: function() {
         
-        Entity.generate.call(this);
+        this.parent.generate.call(this);
         
         var x,y;
         var mass, mag, massCeiling, color;
@@ -24,7 +20,7 @@ var Universe = {
                    
                    this.entities.push(
                         
-                        Object.create(Galaxy).init(
+                        Object.create(Object.inherit(Galaxy,Entity)).init(
                             this,
                             Math.randomSeedNext(1.0),
                             mass,
