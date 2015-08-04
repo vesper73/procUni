@@ -27,8 +27,6 @@ var Entity = {
 	
 	render: function() {
         
-        this.update();
-      
         this.canvas.fillStyle = 'black';
         this.canvas.fillRect(0, 0, this.element.width, this.element.height);
         
@@ -36,6 +34,11 @@ var Entity = {
         for (i in this.entities)
         {
             e = this.entities[i];
+            
+            //update image data
+            e.update();
+            
+            //set image data to canvas
             this.canvas.putImageData(e.imageData, e.location.x - (e.imageData.width/2), e.location.y - (e.imageData.height/2));
         }
         

@@ -5,6 +5,7 @@ var Universe = {
         
         this.parent.generate.call(this);
         
+        var ChildEntity = Object.inherit(Galaxy,Entity);
         var x,y;
         var mass, mag, massCeiling, color;
         for(y = 0; y < this.element.height; y+=2)
@@ -20,7 +21,7 @@ var Universe = {
                    
                    this.entities.push(
                         
-                        Object.create(Object.inherit(Galaxy,Entity)).init(
+                        Object.create(ChildEntity).init(
                             this,
                             Math.randomSeedNext(1.0),
                             mass,
@@ -35,23 +36,11 @@ var Universe = {
         $('#statsSection').html(this.entities.length);
     },
     
-    update: function() {
-        
-        var i, e;
-        for (i in this.entities)
-        {
-           e = this.entities[i];
-           e.imageData = e.imageData || this.canvas.createImageData(2, 2);
-           setPixel(e.imageData,0,0,e.color);
-           setPixel(e.imageData,1,0,e.color);
-           setPixel(e.imageData,0,1,e.color);
-           setPixel(e.imageData,1,1,e.color);
-        }
-    },
-
     zoomIn: function(clickPoint) {
+        
         Universe.currentEntity = Universe.currentEntity || this;
         Universe.currentEntity.changeView(clickPoint);
+        
     },
     
     zoomOut: function() {

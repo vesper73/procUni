@@ -6,6 +6,7 @@
 		<script src="js/perlin.js"></script>
 		<script src="js/util.js"></script>
 		<script src="js/Entity.js"></script>
+		<script src="js/Planet.js"></script>
 		<script src="js/Star.js"></script>
 		<script src="js/Galaxy.js"></script>
 		<script src="js/Universe.js"></script>
@@ -36,7 +37,7 @@
 						</td>
 						
 						<td>
-							<input type="text" id="txtSeed"  />
+							<input type="text" id="txtSeed" value="3.1415926" />
 						</td>
 						<td>
 							<div id='buttonNext' class='controlButton'>Next</div>
@@ -58,12 +59,12 @@
 					
 					
 				    universe = Object.create(Object.inherit(Universe,Entity)).init(
-						universe,
+						null,
 						parseFloat($('#txtSeed').val())
 						,0.0010,
 						"#canvasproc",
-						{x:0,y:0},
-						{r:0,g:0,b:0,a:255}
+						null,
+						null
 					);
 					universe.generate();
 				    universe.render();
@@ -106,7 +107,6 @@
 					//$('#statsSection').html(CURRENT_SEED);
 		        });
 
-				$('#txtSeed').val('3.14159');
 				render();
 			});
 			
