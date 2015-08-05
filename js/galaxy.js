@@ -3,11 +3,11 @@ var Galaxy = {
     
     generate: function() {
         
-        this.parent.generate.call(this);
-        
+        this.parent.reset.call(this);
+    
         //we should generate image data for each entity, and then on the global render method, loop through each entities imagedata an put it at the proper coordinateon the main canvas image
         //regular stars could be 2x2 image data
-        var ChildEntity = Object.inherit(Star,Entity);
+        var ChildEntity = Object.inherit(SolarSystem,Entity);
         
         var x,y;
         var distFromCenter;
@@ -26,7 +26,7 @@ var Galaxy = {
                    massCeiling = 10000;
                    mass = Math.randomSeedNext(massCeiling);
                    mag = (mass / massCeiling * (255 - 30)) + 30;
-                   color = {r: mag, g:mag, b:mag, a:255};
+                   color = {r: mag * 1.0, g:mag *0.7, b:mag * 0.4, a:255};
                    
                    this.entities.push(
                         
@@ -42,7 +42,6 @@ var Galaxy = {
                 }
             }
         }
-        
         
         $('#statsSection').html(this.entities.length);
     },

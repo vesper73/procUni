@@ -3,7 +3,7 @@ var Universe = {
     
     generate: function() {
         
-        this.parent.generate.call(this);
+        this.parent.reset.call(this);
         
         var ChildEntity = Object.inherit(Galaxy,Entity);
         var x,y;
@@ -33,6 +33,7 @@ var Universe = {
                 }
             }
         }
+        
         $('#statsSection').html(this.entities.length);
     },
     

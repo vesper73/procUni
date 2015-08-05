@@ -8,6 +8,7 @@
 		<script src="js/Entity.js"></script>
 		<script src="js/Planet.js"></script>
 		<script src="js/Star.js"></script>
+		<script src="js/SolarSystem.js"></script>
 		<script src="js/Galaxy.js"></script>
 		<script src="js/Universe.js"></script>
 	</head>
@@ -57,8 +58,7 @@
 				
 				function render() {
 					
-					
-				    universe = Object.create(Object.inherit(Universe,Entity)).init(
+					universe = Object.create(Object.inherit(Universe,Entity)).init(
 						null,
 						parseFloat($('#txtSeed').val())
 						,0.0010,

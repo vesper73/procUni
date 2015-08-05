@@ -3,35 +3,44 @@ var Star = {
     
     generate: function() {
         
-        this.parent.generate.call(this);
+        this.parent.reset.call(this);
         
-        var ChildEntity = Object.inherit(Planet,Entity);
-        var planet = Object.create(ChildEntity).init(
-            this,
-            Math.randomSeedNext(1.0),
-            this.mass,
-            this.canvasTag,
-            {x: this.element.width/2, y: this.element.height/2},
-            this.color
-        );
-        
-        planet.generate();
-        
-        this.entities.push(planet);
+        this.zSauce = 0;
+        this.sauce = Math.randomSeedNext(1.0);
         
     },
     
-    
     update: function() {
         
-        this.imageData = this.imageData || this.canvas.createImageData(2, 2);
-        setPixel(this.imageData,0,0,this.color);
-        setPixel(this.imageData,1,0,this.color);
-        setPixel(this.imageData,0,1,this.color);
-        setPixel(this.imageData,1,1,this.color);
+        var starScreenSize = Math.floor(Math.sqrt(this.mass));
+        //console.log(this.mass);
+        var scrRadius = starScreenSize/2;
+        //var starScrPoint = { x: this.element.width/2, y: this.element.height/2 };
+            
+        this.imageData = this.imageData || this.canvas.createImageData(starScreenSize, starScreenSize);
+        
+        var value,dist,scale;
+        var color;
+        for (var x = 0; x < starScreenSize; x++) {
+            for (var y = 0; y < starScreenSize; y++) {
+                
+                value = noise.simplex3( x * this.sauce, y * this.sauce, this.sauce * this.zSauce);
+                
+                dist = screenDistance({x: scrRadius,y: scrRadius }, {x:x,y:y});
+                dist = dist/scrRadius; //normalize distance
+                
+                scale = 0.7;
+                if(dist > scale)
+                    value = value * 1.0/((dist - scale)*30);
+                
+                color = { r: value * this.color.r,g: value * this.color.g,b: value * this.color.b,a: 255};
+                
+                setPixel(this.imageData,x,y,color);
+         
+            }
+        }    
+        
+        this.zSauce+= Math.randomSeedNext(0.02);
     }
-    
-    
-    
-    
+
 };

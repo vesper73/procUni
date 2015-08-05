@@ -2,29 +2,40 @@ var Entity = {
 	
 	init: function(parentEntity, seed, mass, canvasTag, location, color) {
 		
-		this.parentEntity = parentEntity;
-		this.seed = seed;
+        this.parentEntity = parentEntity;
+        this.seed = seed;
 		this.mass = mass;
 		this.canvasTag = canvasTag;
 		this.location = location;
 		this.color = color;
         
 		this.selectedEntity = null;
-		this.entities = null;
+        this.entities = null;
         this.imageData = null;
 		
 		this.element = $(canvasTag).get(0);
 		this.canvas = this.element.getContext('2d');
-				
-		return this;
+		
+        return this;
 	},
     
     generate: function() {
-		
+        
+        throw Error("You must implement the generate method.");
+    },
+	
+    update: function() {
+        
+        throw Error("You must implement the update method.");
+    },
+    
+    reset: function() {
+        
         CURRENT_SEED = this.seed;
         this.entities = [];
-	},
-	
+        
+    },
+    
 	render: function() {
         
         this.canvas.fillStyle = 'black';
