@@ -31,9 +31,19 @@ var Star = {
                 
                 scale = 0.7;
                 if(dist > scale)
-                    value = value * 1.0/((dist - scale)*30);
-                
-                color = { r: value * this.color.r,g: value * this.color.g,b: value * this.color.b,a: 255};
+                {
+                    value = value * 1.0/((dist - scale)*20);
+                    color = { r: value * this.color.r,g: value * this.color.g,b: value * this.color.b,a: 255};
+                }
+                else
+                {
+                    color = { 
+                        r: (value * this.color.r) + (this.color.r * 1),
+                        g: (value * this.color.g) + (this.color.g * 1),
+                        b: (value * this.color.b) + (this.color.b * 1),
+                        a: 255
+                    };
+                }
                 
                 setPixel(this.imageData,x,y,color);
          

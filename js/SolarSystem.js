@@ -23,10 +23,14 @@ var SolarSystem = {
     update: function() {
         
         this.imageData = this.imageData || this.canvas.createImageData(2, 2);
-        setPixel(this.imageData,0,0,this.color);
-        setPixel(this.imageData,1,0,this.color);
-        setPixel(this.imageData,0,1,this.color);
-        setPixel(this.imageData,1,1,this.color);
+        
+        //var color = colorFlicker(this.color);
+        var color = this.color;
+        
+        setPixel(this.imageData,0,0,color);
+        setPixel(this.imageData,1,0,color);
+        setPixel(this.imageData,0,1,color);
+        setPixel(this.imageData,1,1,color);
     }
     
     

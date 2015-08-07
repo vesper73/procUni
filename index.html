@@ -16,8 +16,10 @@
 		
 		<div id="page">
 			
-			<canvas id='canvasproc' width='880' height='800'>canvas setpixel</canvas>
-		    
+			<div id='canvasSection'>
+				<canvas id='canvasproc' width='880' height='800'>canvas setpixel</canvas>
+		    </div>
+			
 			<div class='controlSection'>
 				<table>
 					<tr>
@@ -58,6 +60,9 @@
 				
 				function render() {
 					
+					//document.getElementById('canvasproc').width = document.getElementById('canvasSection').clientWidth - 20;
+					//c.width = 2000;
+					//$("#canvasproc").width = 2000;
 					universe = Object.create(Object.inherit(Universe,Entity)).init(
 						null,
 						parseFloat($('#txtSeed').val())
@@ -95,6 +100,7 @@
 				
 				$('#buttonReset').on('click',
 		        function(e) {
+					Universe.currentEntity = null;
 		            render();
 		        });
 				
@@ -103,6 +109,7 @@
 		        function(e) {
 					
 		            $('#txtSeed').val(parseFloat($('#txtSeed').val()) + 1.0);
+					Universe.currentEntity = null;
 					render();
 					//$('#statsSection').html(CURRENT_SEED);
 		        });

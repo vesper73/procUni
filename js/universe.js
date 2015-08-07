@@ -8,9 +8,13 @@ var Universe = {
         var ChildEntity = Object.inherit(Galaxy,Entity);
         var x,y;
         var mass, mag, massCeiling, color;
-        for(y = 0; y < this.element.height; y+=2)
+        
+        //Do loop in this order because of fixed height.  
+        //This will give same universe, regardless of client width
+        
+        for(x = 0; x < this.element.width; x+=2)
         {
-            for(x = 0; x < this.element.width; x+=2)
+            for(y = 0; y < this.element.height; y+=2)
             {
                 if(Math.randomSeedNext(1.0) < this.mass)
                 {

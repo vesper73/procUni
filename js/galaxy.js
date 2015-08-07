@@ -11,10 +11,10 @@ var Galaxy = {
         
         var x,y;
         var distFromCenter;
-        var mass, mag, massCeiling, color;
-        for(y = 0; y < this.element.height; y+=2)
+        var mass, mag, magadj, massCeiling, color, cRnd, min;
+        for(x = 0; x < this.element.width; x+=2)
         {
-            for(x = 0; x < this.element.width; x+=2)
+            for(y = 0; y < this.element.height; y+=2)
             {
                 distFromCenter = screenDistance(
                     { x: this.element.width/2, y: this.element.height/2 },
@@ -23,12 +23,26 @@ var Galaxy = {
                 
                 if(Math.randomSeedNext(1.0) < 1.0/(distFromCenter*distFromCenter/this.mass))
                 {
-                   massCeiling = 10000;
-                   mass = Math.randomSeedNext(massCeiling);
-                   mag = (mass / massCeiling * (255 - 30)) + 30;
-                   color = {r: mag * 1.0, g:mag *0.7, b:mag * 0.4, a:255};
+                    massCeiling = 10000;
+                    min = 1000;
+                    mass = Math.randomSeedNext(massCeiling - min) + min;
+                    mag = (mass / massCeiling * 0.9);
+                    magadj = mag * 0.3;
                    
-                   this.entities.push(
+                    cRnd = Math.randomSeedNext(1.0);
+                    if(cRnd < 0.01)
+                        color = {r: 255 * magadj, g:255, b:255 * magadj, a:255};
+                    else if(cRnd < 0.05)
+                        color = {r: 255, g:255 * magadj, b:255, a:255};
+                    else if(cRnd < 0.10)
+                        color = {r: 255 * magadj, g:255 * magadj, b:255, a:255};
+                    else if(cRnd < 0.20)
+                        color = {r: 255, g:255 * magadj, b:255 * magadj, a:255};
+                    else
+                        color = {r: 255, g:255, b:255 * mag, a:255};
+                   
+                                       
+                    this.entities.push(
                         
                         Object.create(ChildEntity).init(
                             this,
@@ -49,10 +63,14 @@ var Galaxy = {
     update: function() {
         
        this.imageData = this.imageData || this.canvas.createImageData(2, 2);
-       setPixel(this.imageData,0,0,this.color);
-       setPixel(this.imageData,1,0,this.color);
-       setPixel(this.imageData,0,1,this.color);
-       setPixel(this.imageData,1,1,this.color);
+       
+       //var color = colorFlicker(this.color);
+       var color = this.color;
+       
+       setPixel(this.imageData,0,0,color);
+       setPixel(this.imageData,1,0,color);
+       setPixel(this.imageData,0,1,color);
+       setPixel(this.imageData,1,1,color);
            
     },
 
