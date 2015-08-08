@@ -3,10 +3,36 @@ var Universe = {
     
     generate: function() {
         
+        var x,y
+        
         this.parent.reset.call(this);
         
+        //generate background
+        this.backgroundImageData = this.backgroundImageData || this.canvas.createImageData(this.element.width, this.element.height);
+        
+        var randR = Math.randomSeedNext(noise.MAX_SEED);
+        var randG = Math.randomSeedNext(noise.MAX_SEED);
+        var randB = Math.randomSeedNext(noise.MAX_SEED);
+        var magR = Math.randomSeedNext(1.0);
+        var magG = Math.randomSeedNext(0.5);
+        var magB = Math.randomSeedNext(1.0);
+        var zoom = 0.0009;
+        
+        for(x = 0;x < this.element.width;x++) {
+            for(y = 0;y < this.element.height;y++){
+                
+                setPixel(this.backgroundImageData,x,y, {
+                        r: 255 * noise.perlin3(x * zoom,y * zoom,randR) * magR,
+                        g: 255 * noise.perlin3(x * zoom,y * zoom,randG) * magG,
+                        b: 255 * noise.perlin3(x * zoom,y * zoom,randB) * magB,
+                        a: 255
+                    }
+                );
+            }
+        }
+        
+        //generate entities
         var ChildEntity = Object.inherit(Galaxy,Entity);
-        var x,y;
         var mass, mag, massCeiling, color;
         
         //Do loop in this order because of fixed height.  
@@ -50,7 +76,8 @@ var Universe = {
     
     zoomOut: function() {
         
-        Universe.currentEntity = Universe.currentEntity.parentEntity;
+        Universe.currentEntity = Universe.currentEntity.parentEntity || this;
+        Universe.currentEntity.generate();
         Universe.currentEntity.render();
         
     },

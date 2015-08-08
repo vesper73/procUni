@@ -1,4 +1,3 @@
-/* global noise */
 var SolarSystem = {
     
     generate: function() {

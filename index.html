@@ -54,19 +54,16 @@
 		
 		<script>
 			
-			var universe, mass; 
+			var universe; 
 			
 			$(document).ready(function(){
 				
 				function render() {
 					
-					//document.getElementById('canvasproc').width = document.getElementById('canvasSection').clientWidth - 20;
-					//c.width = 2000;
-					//$("#canvasproc").width = 2000;
 					universe = Object.create(Object.inherit(Universe,Entity)).init(
 						null,
 						parseFloat($('#txtSeed').val())
-						,0.0010,
+						,0.0020,
 						"#canvasproc",
 						null,
 						null
@@ -80,15 +77,13 @@
 				$("#canvasproc").on('click',
 					
 					function(e) {
-						cancelAnimationFrame(Universe.animationHandle);
-		            	universe.zoomIn({ x: e.offsetX, y: e.offsetY });
+						universe.zoomIn({ x: e.offsetX, y: e.offsetY });
 					}
 				);
 				
 				$("#buttonZoomOut").on('click',
 		        	function(e) {
-						cancelAnimationFrame(Universe.animationHandle);
-		            	universe.zoomOut();
+						universe.zoomOut();
 					}
 				);
 				
@@ -100,8 +95,7 @@
 				
 				$('#buttonReset').on('click',
 		        function(e) {
-					Universe.currentEntity = null;
-		            render();
+					render();
 		        });
 				
 				
@@ -109,7 +103,6 @@
 		        function(e) {
 					
 		            $('#txtSeed').val(parseFloat($('#txtSeed').val()) + 1.0);
-					Universe.currentEntity = null;
 					render();
 					//$('#statsSection').html(CURRENT_SEED);
 		        });

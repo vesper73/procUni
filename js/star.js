@@ -1,12 +1,11 @@
-/* global noise */
 var Star = {
     
     generate: function() {
         
         this.parent.reset.call(this);
         
-        this.zSauce = 0;
-        this.sauce = Math.randomSeedNext(1.0);
+        this.noiseValues['zoom'] = Math.randomSeedNext(1.0);
+        this.noiseValues['noiseZ'] = Math.randomSeedNext(noise.MAX_SEED)
         
     },
     
@@ -21,26 +20,27 @@ var Star = {
         
         var value,dist,scale;
         var color;
+        
         for (var x = 0; x < starScreenSize; x++) {
             for (var y = 0; y < starScreenSize; y++) {
                 
-                value = noise.simplex3( x * this.sauce, y * this.sauce, this.sauce * this.zSauce);
+                value = noise.simplex3(x*this.noiseValues['zoom'], y*this.noiseValues['zoom'], this.noiseValues['noiseZ']);
                 
                 dist = screenDistance({x: scrRadius,y: scrRadius }, {x:x,y:y});
                 dist = dist/scrRadius; //normalize distance
                 
-                scale = 0.7;
+                scale = 0.5;
                 if(dist > scale)
                 {
-                    value = value * 1.0/((dist - scale)*20);
+                    value = value * 1.0/((dist - scale)*15);
                     color = { r: value * this.color.r,g: value * this.color.g,b: value * this.color.b,a: 255};
                 }
                 else
                 {
                     color = { 
-                        r: (value * this.color.r) + (this.color.r * 1),
-                        g: (value * this.color.g) + (this.color.g * 1),
-                        b: (value * this.color.b) + (this.color.b * 1),
+                        r: ((value * this.color.r) + (this.color.r * 0.7)).ceil(255),
+                        g: ((value * this.color.g) + (this.color.g * 0.7)).ceil(255),
+                        b: ((value * this.color.b) + (this.color.b * 0.7)).ceil(255),
                         a: 255
                     };
                 }
@@ -50,7 +50,7 @@ var Star = {
             }
         }    
         
-        this.zSauce+= Math.randomSeedNext(0.02);
+        this.noiseValues['noiseZ'] += Math.randomSeedNext(0.02);
     }
 
 };

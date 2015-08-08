@@ -1,4 +1,5 @@
 Math.TAU = 6.28318530717958; 
+noise.MAX_SEED = 65536;
 
 var CURRENT_SEED;
       
@@ -10,6 +11,7 @@ Math.randomSeed = function(s) {
 };
 
 Math.randomSeedNext = function(range) {
+    range = range || 1.0;
     CURRENT_SEED = Math.randomSeed(CURRENT_SEED);
     return CURRENT_SEED * range;
 };
@@ -67,6 +69,10 @@ var colorFlicker = function(color) {
     }
     
     return newColor;
+}
+
+Number.prototype.ceil = function(max) {
+    return Math.min(max,this);
 }
 
 

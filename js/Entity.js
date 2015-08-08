@@ -11,7 +11,9 @@ var Entity = {
         
 		this.selectedEntity = null;
         this.entities = null;
+        this.noiseValues = null;
         this.imageData = null;
+        this.backgroundImageData = null;
 		
 		this.element = $(canvasTag).get(0);
 		this.canvas = this.element.getContext('2d');
@@ -31,7 +33,9 @@ var Entity = {
     
     reset: function() {
         
+        cancelAnimationFrame(Universe.animationHandle);
         CURRENT_SEED = this.seed;
+        this.noiseValues = [];
         this.entities = [];
         
     },
@@ -40,6 +44,9 @@ var Entity = {
         
         this.canvas.fillStyle = 'black';
         this.canvas.fillRect(0, 0, this.element.width, this.element.height);
+        
+        if(this.backgroundImageData)
+            this.canvas.putImageData(this.backgroundImageData, 0, 0);
         
         var i, e;
         for (i in this.entities)
