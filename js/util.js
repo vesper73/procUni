@@ -38,6 +38,18 @@ var setPixel = function(iData, x, y, c) {
     iData.data[index+3] = c.a;
 };
 
+var getPixel = function(iData, x, y) {
+    
+    index = (x + y * iData.width) * 4;
+    
+    return { 
+        r: iData.data[index+0],
+        g: iData.data[index+1],
+        b: iData.data[index+2],
+        a: iData.data[index+3]
+    }
+};
+
 var xDist,yDist;
 var screenDistance = function(point1,point2) {
     

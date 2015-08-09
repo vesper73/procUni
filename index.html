@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>Universe</title>
-		<link rel="stylesheet" type="text/css" href="css/mand.css"></line>
+		<link rel="stylesheet" type="text/css" href="css/style.css"></line>
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="js/perlin.js"></script>
 		<script src="js/util.js"></script>
@@ -60,10 +60,12 @@
 				
 				function render() {
 					
+					Universe.currentEntity = null;
+					
 					universe = Object.create(Object.inherit(Universe,Entity)).init(
 						null,
 						parseFloat($('#txtSeed').val())
-						,0.0020,
+						,0.0010,
 						"#canvasproc",
 						null,
 						null

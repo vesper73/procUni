@@ -3,7 +3,20 @@ var SolarSystem = {
     generate: function() {
         
         this.parent.reset.call(this);
-    
+        
+        //Create background
+        var x,y;
+        
+        var bColor = getPixel(this.parentEntity.backgroundImageData,this.location.x,this.location.y);
+        this.backgroundImageData = this.backgroundImageData || this.canvas.createImageData(this.element.width, this.element.height);
+        
+        for(x = 0;x < this.element.width;x++) {
+            for(y = 0;y < this.element.height;y++) {
+                setPixel(this.backgroundImageData,x,y, { r: bColor.r, g: bColor.g, b: bColor.b, a:255 });
+            }
+        }
+        
+        //Add entities
         var star = Object.create(Object.inherit(Star,Entity)).init(
             this,
             Math.randomSeedNext(1.0),

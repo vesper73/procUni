@@ -4,16 +4,27 @@ var Galaxy = {
     
     generate: function() {
         
+        //reset
         this.parent.reset.call(this);
-              
+        
+        //generate background
+        var bColor = getPixel(this.parentEntity.backgroundImageData,this.location.x,this.location.y);
+        this.parent.createBackgroundImage.call(this, 
+            0.002, { 
+                magR: bColor.r/255 * 2, 
+                magG: bColor.g/255 * 2, 
+                magB: bColor.b/255 * 2
+            }
+        );
+        
         //generate entities   
         var ChildEntity = Object.inherit(SolarSystem,Entity);
         
-        var x,y;
         var distFromCenter;
         var mass, mag, color, cRnd;
         var massCeiling = 10000;
         var min = 500;
+        var x,y;
         for(x = 0; x < this.element.width; x+=2)
         {
             for(y = 0; y < this.element.height; y+=2)

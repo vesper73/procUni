@@ -8,28 +8,15 @@ var Universe = {
         this.parent.reset.call(this);
         
         //generate background
-        this.backgroundImageData = this.backgroundImageData || this.canvas.createImageData(this.element.width, this.element.height);
         
-        var randR = Math.randomSeedNext(noise.MAX_SEED);
-        var randG = Math.randomSeedNext(noise.MAX_SEED);
-        var randB = Math.randomSeedNext(noise.MAX_SEED);
-        var magR = Math.randomSeedNext(1.0);
-        var magG = Math.randomSeedNext(0.5);
-        var magB = Math.randomSeedNext(1.0);
-        var zoom = 0.0009;
-        
-        for(x = 0;x < this.element.width;x++) {
-            for(y = 0;y < this.element.height;y++){
-                
-                setPixel(this.backgroundImageData,x,y, {
-                        r: 255 * noise.perlin3(x * zoom,y * zoom,randR) * magR,
-                        g: 255 * noise.perlin3(x * zoom,y * zoom,randG) * magG,
-                        b: 255 * noise.perlin3(x * zoom,y * zoom,randB) * magB,
-                        a: 255
-                    }
-                );
+        var cSwitch = Math.floor(Math.randomSeedNext(3.0)); //Limit to two colors
+        this.parent.createBackgroundImage.call(this, 
+            0.009, { 
+                magR: cSwitch === 0 ? 0 : 0.2, 
+                magG: cSwitch === 1 ? 0 : 0.2, 
+                magB: cSwitch === 2 ? 0 : 0.2, 
             }
-        }
+        );
         
         //generate entities
         var ChildEntity = Object.inherit(Galaxy,Entity);
@@ -37,7 +24,6 @@ var Universe = {
         
         //Do loop in this order because of fixed height.  
         //This will give same universe, regardless of client width
-        
         for(x = 0; x < this.element.width; x+=2)
         {
             for(y = 0; y < this.element.height; y+=2)

@@ -40,6 +40,30 @@ var Entity = {
         
     },
     
+    createBackgroundImage: function(zoom, magnitude) {
+        
+        var x,y;
+        
+        this.backgroundImageData = this.backgroundImageData || this.canvas.createImageData(this.element.width, this.element.height);
+        
+        var randR = Math.randomSeedNext(noise.MAX_SEED);
+        var randG = Math.randomSeedNext(noise.MAX_SEED);
+        var randB = Math.randomSeedNext(noise.MAX_SEED);
+        
+        for(x = 0;x < this.element.width;x++) {
+            for(y = 0;y < this.element.height;y++){
+                
+                setPixel(this.backgroundImageData,x,y, {
+                        r: 255 * noise.perlin3(x * zoom,y * zoom,randR) * magnitude.magR,
+                        g: 255 * noise.perlin3(x * zoom,y * zoom,randG) * magnitude.magG,
+                        b: 255 * noise.perlin3(x * zoom,y * zoom,randB) * magnitude.magB,
+                        a: 255
+                    }
+                );
+            }
+        }
+    },
+    
 	render: function() {
         
         this.canvas.fillStyle = 'black';
